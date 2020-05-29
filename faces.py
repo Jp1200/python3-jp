@@ -13,16 +13,9 @@ boundaries = [
 
 cap = cv2.VideoCapture(0)
 while(True):
+ 	ret, frame = cap.read()
 
-
-	ret, frame = cap.read()
-	for (lower, upper) in boundaries:
-		lower = np.array(lower, dtype = 'uint8')
-		upper = np.array(upper, dtype = 'uint8')
-		#mask to find colors within boundaries
-		mask = cv2.inRange(frame,lower,upper)
-		output = cv2.bitwise_and(frame, frame, mask = mask)
-	cv2.imshow('frame', np.hstack([frame,output]))
+	cv2.imshow('WebCam', frame)
 	if cv2.waitKey(20) & 0XFF == ord('q'):
 		print('Program Closed! Saving...')
 		break
