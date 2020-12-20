@@ -4,7 +4,7 @@ import cv2
 
 
 class Converter:
-    def __init__(self, path='./Resources/lofi.jpg', font_size=18, color_lvl=8):
+    def __init__(self, path='./Resources/l1.jpg', font_size=44, color_lvl=8):
         pg.init()
         self.path = path
         self.image, self.gray_image = self.get_image()
@@ -20,6 +20,7 @@ class Converter:
         self.PALETTE, self.COLOR_COEFF = self.create_palette()
 
     def draw_converted_image(self):
+
         char_indices = self.gray_image // self.ASCII_COEFF
         color_indices = self.image // self.COLOR_COEFF
         for x in range(0, self.WIDTH, self.CHAR_step):
@@ -61,14 +62,19 @@ class Converter:
     def draw(self):
         self.surface.fill('black')
         self.draw_converted_image()
+
         # self.draw_cv2_image()
 
     def save_image(self):
         pg_image = pg.surfarray.array3d(self.surface)
+
         cv2_img = cv2.transpose(pg_image)
-        cv2.imwrite('./Resources/ascii_img.jpg', cv2_img)
+        cv2_img_color = cv2.cvtColor(cv2_img, cv2.COLOR_BGR2RGB)
+        cv2.imwrite('./Resources/ascii_img.jpg', cv2_img_color)
 
     def run(self):
+        self.draw()
+        pg.display.flip()
         while True:
             for i in pg.event.get():
                 if i.type == pg.QUIT:
@@ -78,10 +84,9 @@ class Converter:
                         self.save_image()
                     else:
                         exit()
-            self.draw()
-            pg.display.set_caption(str(self.clock.get_fps()))
-            pg.display.flip()
-            self.clock.tick()
+
+            # pg.display.set_caption(str(self.clock.get_fps()))
+            # self.clock.tick()
 
 
 if __name__ == "__main__":

@@ -10,11 +10,6 @@ boundaries = [
 ]
 
 
-def change_res(cap, width, height):
-    cap.set(3, width)
-    cap.set(4, height)
-
-
 def get_dim(cap, res="1080p"):
     width, height = STD_RES["detect"]
     if res in STD_RES:
@@ -31,9 +26,9 @@ classes = []
 with open('./config/coco.names', 'r') as f:
     classes = f.read().splitlines()
 print(classes)
-
+# DEFINE VIDEO CAPTURE METHOD
 cap = cv2.VideoCapture(0)
-# cap = cv2.VideoCapture("22.mp4")
+#cap = cv2.VideoCapture("22.mp4")
 if (cap.isOpened() == False):
     print("Error opening video stream or file")
 
